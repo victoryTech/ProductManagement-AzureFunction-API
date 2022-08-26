@@ -5,6 +5,10 @@ module.exports.getAllAvaiableProducts = async () => {
   return productDataAcess.getAllAvailableProductsFromDB();
 };
 
+module.exports.getAllAvailableProductDetails = async () => {
+  return productDataAcess.getAllAvailableProductDetailsFromDB();
+};
+
 module.exports.getProductById = async (id) => {
   let sqlParameters = [];
   sqlParameters.push({
@@ -13,6 +17,16 @@ module.exports.getProductById = async (id) => {
     value: id,
   });
   return productDataAcess.getProductByIdFromDB(sqlParameters);
+};
+
+module.exports.getProductByName = async (searchProductName) => {
+  let sqlParameters = [];
+  sqlParameters.push({
+    name: "productName",
+    type: sql.NVarChar,
+    value: searchProductName,
+  });
+  return productDataAcess.getProductByNameFromDB(sqlParameters);
 };
 
 module.exports.insertProduct = async (parameter) => {
@@ -42,7 +56,6 @@ module.exports.insertProduct = async (parameter) => {
 
 module.exports.updateProductDetailsById = async (parameter, productId) => {
   let sqlParameters = [];
-  console.log("............*****", parameter);
   sqlParameters.push({
     name: "productId",
     type: sql.Int,
@@ -92,18 +105,4 @@ module.exports.deleteProductById = async (id) => {
     value: id,
   });
   productDataAcess.deleteProductByIdInDB(sqlParameters);
-};
-
-module.exports.getAllAvailableProductDetails = async () => {
-  return productDataAcess.getAllAvailableProductDetailsFromDB();
-};
-
-module.exports.getProductByName = async (searchProductName) => {
-  let sqlParameters = [];
-  sqlParameters.push({
-    name: "productName",
-    type: sql.NVarChar,
-    value: searchProductName,
-  });
-  return productDataAcess.getProductByNameFromDB(sqlParameters);
 };

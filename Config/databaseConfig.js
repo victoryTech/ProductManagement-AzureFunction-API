@@ -1,8 +1,8 @@
 const config = {
-  user: "",
-  password: "",
-  database: "",
-  server: "",
+  user: "sa",
+  password: "12345",
+  database: "AzureDatabase",
+  server: "DESKTOP-R6D3R5Q",
   port: 1433,
   pool: {
     max: 10,

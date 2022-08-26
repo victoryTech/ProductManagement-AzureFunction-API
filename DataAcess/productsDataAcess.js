@@ -8,6 +8,13 @@ module.exports = {
     return result;
   },
 
+  getAllAvailableProductDetailsFromDB: async () => {
+    let pool = await poolPromise;
+    let request = await pool.request();
+    let result = await request.execute("spGetAllAvailableProductsDetails");
+    return result;
+  },
+
   getProductByIdFromDB: async (parameter) => {
     let pool = await poolPromise;
     let request = await pool.request();
@@ -19,6 +26,20 @@ module.exports = {
     }
 
     let result = await request.execute("spGetProductById");
+    return result;
+  },
+
+  getProductByNameFromDB: async (parameter) => {
+    let pool = await poolPromise;
+    let request = await pool.request();
+
+    if (Array.isArray(parameter)) {
+      parameter.forEach((param) => {
+        request.input(param.name, param.type, param.value);
+      });
+    }
+
+    let result = await request.execute("spGetProductByProductName");
     return result;
   },
 
@@ -70,26 +91,5 @@ module.exports = {
     }
 
     await request.execute("spDeleteProductById");
-  },
-
-  getAllAvailableProductDetailsFromDB: async () => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-    let result = await request.execute("spGetAllAvailableProductsDetails");
-    return result;
-  },
-
-  getProductByNameFromDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
-    }
-
-    let result = await request.execute("spGetProductByProductName");
-    return result;
   },
 };
