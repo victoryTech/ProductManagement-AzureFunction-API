@@ -40,6 +40,7 @@ module.exports.checkAllFieldsOfInsertProductData = async (insertedData) => {
     insertedProductName
   );
   let insertedProductIdIsPresent = await this.hasValidId(insertedProductId);
+
   if (
     this.isItValidPorductName(insertedProductName) &&
     !insertedProductNameIsPresent &&
@@ -99,7 +100,67 @@ module.exports.isItValidPorductQuantity = (productQuantity) => {
   return false;
 };
 
-// trim space of data from both side.
+// valid color Name
+module.exports.isItValidColor = (color) => {
+  if (typeof color === "string") return true;
+  return false;
+};
+
+// valid color id
+module.exports.isItValidColorId = (colorId) => {
+  if (typeof colorId === "number") return true;
+  return false;
+};
+
+// Trim space of data from both side.
 module.exports.trimSpace = (data) => {
   return data.trim();
+};
+
+// checking product with corresponding color is having valid details and present or not
+module.exports.isValidProductNameAndColor = (prodName, prodColor) => {
+  if (this.isItValidPorductName(prodName) && this.isItValidColor(prodColor)) {
+    return true;
+  }
+  return false;
+};
+
+// extract product Name and productColor
+module.exports.extractProductNameAndColor = (insertedProductDetails) => {
+  insertedProductDetails.productName = this.trimSpace(
+    insertedProductDetails.productName
+  );
+  insertedProductDetails.productColor = this.trimSpace(
+    insertedProductDetails.productColor
+  );
+  return insertedProductDetails;
+};
+
+// Checking all the details of the product Information is valid or not.
+module.exports.checkAllFieldsOfInsertProductColorData = (insertedInputData) => {
+  let insertedProductName = this.trimSpace(insertedInputData.productName);
+  let insertedProductId = insertedInputData.productId;
+  let insertedColorId = insertedInputData.colorId;
+  let insertedColorName = insertedInputData.colorName;
+  let insertedProductPrice = insertedInputData.productPrice;
+  let insertedProductQuantity = insertedInputData.productQuantity;
+
+  if (
+    this.isItValidPorductName(insertedProductName) &&
+    this.isItValidPorductId(insertedProductId) &&
+    this.isItValidColor(insertedColorName) &&
+    this.isItValidColorId(insertedColorId) &&
+    this.isItValidPorductPrice(insertedProductPrice) &&
+    this.isItValidPorductQuantity(insertedProductQuantity)
+  ) {
+    return true;
+  }
+  return false;
+};
+
+// Extracting pure details
+module.exports.extractInputProductWithColorData = (insertedData) => {
+  insertedData.productName = this.trimSpace(insertedData.productName);
+  insertedData.colorName = this.trimSpace(insertedData.colorName);
+  return insertedData;
 };

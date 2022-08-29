@@ -10,7 +10,7 @@ module.exports = async function (context, req) {
     // Checking all the details of the product is valid or not.
     if (await validation.checkAllFieldsOfInsertProductData(req.body)) {
       // Extracting pure data
-      let extractPureData = await validation.extractData(req.body);
+      let extractPureData = validation.extractData(req.body);
 
       await productControllers.insertProduct(extractPureData);
 

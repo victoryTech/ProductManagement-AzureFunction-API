@@ -51,6 +51,7 @@ module.exports.insertProduct = async (parameter) => {
     type: sql.Int,
     value: parameter.productQuantity,
   });
+
   productDataAcess.insertProductInDB(sqlParameters);
 };
 
@@ -105,4 +106,67 @@ module.exports.deleteProductById = async (id) => {
     value: id,
   });
   productDataAcess.deleteProductByIdInDB(sqlParameters);
+};
+
+module.exports.getProductInfoByNameAndColor = async (parameter) => {
+  let sqlParameters = [];
+  sqlParameters.push({
+    name: "productName",
+    type: sql.NVarChar,
+    value: parameter.productName,
+  });
+  sqlParameters.push({
+    name: "productColor",
+    type: sql.NVarChar,
+    value: parameter.productColor,
+  });
+
+  return productDataAcess.getProductInfoByNameAndColorFromDB(sqlParameters);
+};
+
+module.exports.getProductColorsByName = async (productName) => {
+  let sqlParameters = [];
+  sqlParameters.push({
+    name: "productName",
+    type: sql.NVarChar,
+    value: productName,
+  });
+
+  return productDataAcess.getProductColorsByNameFromDB(sqlParameters);
+};
+
+module.exports.insertProductWithColorData = async (parameter) => {
+  let sqlParameters = [];
+  sqlParameters.push({
+    name: "productId",
+    type: sql.Int,
+    value: parameter.productId,
+  });
+  sqlParameters.push({
+    name: "productName",
+    type: sql.NVarChar,
+    value: parameter.productName,
+  });
+  sqlParameters.push({
+    name: "colorId",
+    type: sql.Int,
+    value: parameter.colorId,
+  });
+  sqlParameters.push({
+    name: "colorName",
+    type: sql.NVarChar,
+    value: parameter.colorName,
+  });
+  sqlParameters.push({
+    name: "productPrice",
+    type: sql.Int,
+    value: parameter.productPrice,
+  });
+  sqlParameters.push({
+    name: "productQuantity",
+    type: sql.Int,
+    value: parameter.productQuantity,
+  });
+
+  await productDataAcess.insertProductWithColorDataInDB(sqlParameters);
 };

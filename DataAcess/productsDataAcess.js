@@ -92,4 +92,45 @@ module.exports = {
 
     await request.execute("spDeleteProductById");
   },
+
+  getProductInfoByNameAndColorFromDB: async (parameter) => {
+    let pool = await poolPromise;
+    let request = await pool.request();
+
+    if (Array.isArray(parameter)) {
+      parameter.forEach((param) => {
+        request.input(param.name, param.type, param.value);
+      });
+    }
+
+    let result = await request.execute(
+      "spGetProductInfoByProductNameAndProductColor"
+    );
+    return result;
+  },
+
+  getProductColorsByNameFromDB: async (parameter) => {
+    let pool = await poolPromise;
+    let request = await pool.request();
+    if (Array.isArray(parameter)) {
+      parameter.forEach((param) => {
+        request.input(param.name, param.type, param.value);
+      });
+    }
+
+    let result = await request.execute("spGetAvailableColorOptionsOfProduct");
+    return result;
+  },
+
+  insertProductWithColorDataInDB: async (parameter) => {
+    let pool = await poolPromise;
+    let request = await pool.request();
+    if (Array.isArray(parameter)) {
+      parameter.forEach((param) => {
+        request.input(param.name, param.type, param.value);
+      });
+    }
+
+    await request.execute("spInsertProductDetails");
+  },
 };

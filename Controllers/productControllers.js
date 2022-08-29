@@ -76,6 +76,39 @@ class ProductController {
       console.log(err);
     }
   };
+
+  // Fetching product information by Name and color
+  static getProductInfoByNameAndColor = async (productInfo) => {
+    try {
+      let productInformation = await services.getProductInfoByNameAndColor(
+        productInfo
+      );
+      return productInformation.recordset;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Fetching product information with colors option
+  static getProductColorsByName = async (productName) => {
+    try {
+      let productInformation = await services.getProductColorsByName(
+        productName
+      );
+      return productInformation.recordsets[0];
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Controller for inserting the details of product with it's color in the db.
+  static insertProductWithColorData = async (insertedData) => {
+    try {
+      await services.insertProductWithColorData(insertedData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
 
 module.exports = ProductController;
