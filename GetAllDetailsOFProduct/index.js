@@ -6,6 +6,10 @@ module.exports = async function (context, req) {
   const responseMessage =
     await productControllers.getAllAvailableProductDetails();
 
+  if (responseMessage.length == 0) {
+    responseMessage = "We dont have any product at this moment!!";
+  }
+
   context.res = {
     status: 200,
     body: responseMessage,

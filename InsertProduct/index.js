@@ -4,8 +4,7 @@ const validation = require("../Validation/inputValidation.js");
 module.exports = async function (context, req) {
   context.log("Insert the product details in the Database!!!");
 
-  let responseMessage;
-  let statusCode;
+  let responseMessage, statusCode;
   if (req.body) {
     // Checking all the details of the product is valid or not.
     if (await validation.checkAllFieldsOfInsertProductData(req.body)) {

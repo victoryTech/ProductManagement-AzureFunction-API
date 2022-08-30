@@ -101,10 +101,21 @@ class ProductController {
     }
   };
 
-  // Controller for inserting the details of product with it's color in the db.
+  // inserting the details of product with it's color in the db.
   static insertProductWithColorData = async (insertedData) => {
     try {
       await services.insertProductWithColorData(insertedData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  static updateProductQuantityOnProductSold = async (updateData) => {
+    try {
+      let result = await services.updateProductQuantityOnProductSold(
+        updateData
+      );
+      return result;
     } catch (err) {
       console.log(err);
     }

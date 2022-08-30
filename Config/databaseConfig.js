@@ -1,8 +1,11 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const config = {
-  user: "sa",
-  password: "12345",
-  database: "AzureDatabase",
-  server: "DESKTOP-R6D3R5Q",
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  server: process.env.DATABASE_SERVER,
   port: 1433,
   pool: {
     max: 10,

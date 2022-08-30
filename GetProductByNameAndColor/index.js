@@ -6,16 +6,18 @@ module.exports = async function (context, req) {
 
   let responseMessage, statusCode;
   if (req.params.productName && req.params.productColor) {
-    // check the productName with correspondig color is present or not
     let validProductDetails = validation.isValidProductNameAndColor(
       req.params.productName,
       req.params.productColor
     );
+
     if (validProductDetails) {
       let extractDetails = validation.extractProductNameAndColor(req.params);
+
       responseMessage = await productControllers.getProductInfoByNameAndColor(
         extractDetails
       );
+
       if (responseMessage.length != 0) {
         statusCode = 200;
       } else {

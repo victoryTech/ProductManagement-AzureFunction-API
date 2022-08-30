@@ -4,8 +4,7 @@ const validation = require("../Validation/inputValidation.js");
 module.exports = async function (context, req) {
   context.log("Delete Product details of given  productId!!!");
 
-  let responseMessage;
-  let statusCode;
+  let responseMessage, statusCode;
   if (req.params.id) {
     // Checking whether product id is valid or not, if not present send a message as invalid Id
     let validateDeleteId = await validation.hasValidId(req.params.id);

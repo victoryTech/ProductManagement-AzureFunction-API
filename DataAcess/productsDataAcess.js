@@ -133,4 +133,15 @@ module.exports = {
 
     await request.execute("spInsertProductDetails");
   },
+
+  updateProductQuantityOnProductSoldInDB: async (parameter) => {
+    let pool = await poolPromise;
+    let request = await pool.request();
+    if (Array.isArray(parameter)) {
+      parameter.forEach((param) => {
+        request.input(param.name, param.type, param.value);
+      });
+    }
+    return await request.execute("spUpdateProductQuantityOnProductSold");
+  },
 };

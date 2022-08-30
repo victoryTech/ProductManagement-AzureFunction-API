@@ -19,7 +19,9 @@ module.exports.hasValidId = async (id) => {
 module.exports.hasValidProductName = async (productName) => {
   let allAvailableProducts =
     await productControllers.getAllAvailableProductDetails();
+
   productName = this.trimSpace(productName);
+
   let isProductNamePresent = allAvailableProducts.reduce(function (acc, curr) {
     if (curr.productName.toLowerCase() == productName.toLowerCase()) {
       acc = true;
@@ -39,6 +41,7 @@ module.exports.checkAllFieldsOfInsertProductData = async (insertedData) => {
   let insertedProductNameIsPresent = await this.hasValidProductName(
     insertedProductName
   );
+
   let insertedProductIdIsPresent = await this.hasValidId(insertedProductId);
 
   if (
@@ -70,7 +73,7 @@ module.exports.checkAllFieldsOfUpdateProductData = async (updateData) => {
   return false;
 };
 
-// extracting pure productName from input
+// Extracting pure productName from input
 module.exports.extractData = (insertedData) => {
   insertedData.productName = this.trimSpace(insertedData.productName);
   return insertedData;
@@ -78,37 +81,44 @@ module.exports.extractData = (insertedData) => {
 
 // Is it valid productName acc. to schema
 module.exports.isItValidPorductName = (data) => {
-  if (typeof data === "string" && data.length != 0) return true;
+  let isValid = /^[a-zA-Z]+$/.test(data);
+  if (isValid) return true;
   return false;
 };
 
 // Is it valid productId acc. to schema
 module.exports.isItValidPorductId = (id) => {
-  if (typeof id === "number" && id > 0) return true;
+  let isValid = /^\d+$/.test(id);
+  if (isValid && id > 0) return true;
   return false;
 };
 
 // Is it valid productPrice acc. to schema
 module.exports.isItValidPorductPrice = (productPrice) => {
-  if (typeof productPrice === "number") return true;
+  let isValid = /^\d+$/.test(productPrice);
+  if (isValid) return true;
   return false;
 };
 
 // Is it valid productQuantity acc. to schema
 module.exports.isItValidPorductQuantity = (productQuantity) => {
-  if (typeof productQuantity === "number") return true;
+  productQuantity = parseInt(productQuantity);
+  let isValid = /^\d+$/.test(productQuantity);
+  if (isValid) return true;
   return false;
 };
 
 // valid color Name
 module.exports.isItValidColor = (color) => {
-  if (typeof color === "string") return true;
+  let isValid = /^[a-zA-Z]+$/.test(color);
+  if (isValid) return true;
   return false;
 };
 
 // valid color id
 module.exports.isItValidColorId = (colorId) => {
-  if (typeof colorId === "number") return true;
+  let isValid = /^\d+$/.test(colorId);
+  if (isValid) return true;
   return false;
 };
 

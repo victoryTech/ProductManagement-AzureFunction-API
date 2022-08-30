@@ -170,3 +170,23 @@ module.exports.insertProductWithColorData = async (parameter) => {
 
   await productDataAcess.insertProductWithColorDataInDB(sqlParameters);
 };
+
+module.exports.updateProductQuantityOnProductSold = async (parameter) => {
+  let sqlParameters = [];
+  sqlParameters.push({
+    name: "productName",
+    type: sql.NVarChar,
+    value: parameter.productName,
+  });
+  sqlParameters.push({
+    name: "colorName",
+    type: sql.NVarChar,
+    value: parameter.productColor,
+  });
+  sqlParameters.push({
+    name: "productQuantity",
+    type: sql.INT,
+    value: parameter.productQuantity,
+  });
+  return productDataAcess.updateProductQuantityOnProductSoldInDB(sqlParameters);
+};

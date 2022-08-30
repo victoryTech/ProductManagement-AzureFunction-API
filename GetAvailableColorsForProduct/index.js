@@ -6,19 +6,28 @@ module.exports = async function (context, req) {
 
   let responseMessage, statusCode;
   if (req.params.productName) {
-    let validName = await validation.hasValidProductName(
-      req.params.productName
-    );
-    if (validName) {
-      let extractData = validation.extractData(req.params);
-      responseMessage = await productControllers.getProductColorsByName(
-        extractData.productName
+    let isValid = validation.hasValidProductName(req.params.productName);
+    // checking for valid product Name constraint
+    if (isValid) {
+      let isProductAvailable = await validation.hasValidProductName(
+        req.params.productName
       );
-      if (responseMessage != 0) {
-        statusCode = 200;
+      // Given product is available or not
+      if (isProductAvailable) {
+        let extractData = validation.extractData(req.params);
+        responseMessage = await productControllers.getProductColorsByName(
+          extractData.productName
+        );
+        // if dont get any result -> means we dont have color option for this product.
+        if (responseMessage != 0) {
+          statusCode = 200;
+        } else {
+          statusCode = 200;
+          responseMessage = "We don't have color's option for this product!!!";
+        }
       } else {
-        statusCode = 200;
-        responseMessage = "We don't have color's option for this product!!!";
+        responseMessage = "Product is not available";
+        statusCode = 400;
       }
     } else {
       responseMessage = "Invalid Product Name, Enter Valid Product Name!!!";
