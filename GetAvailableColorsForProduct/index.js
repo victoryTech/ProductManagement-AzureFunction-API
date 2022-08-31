@@ -6,7 +6,7 @@ module.exports = async function (context, req) {
 
   let responseMessage, statusCode;
   if (req.params.productName) {
-    let isValid = validation.hasValidProductName(req.params.productName);
+    let isValid = validation.isItValidPorductName(req.params.productName);
     // checking for valid product Name constraint
     if (isValid) {
       let isProductAvailable = await validation.hasValidProductName(
@@ -18,6 +18,7 @@ module.exports = async function (context, req) {
         responseMessage = await productControllers.getProductColorsByName(
           extractData.productName
         );
+        // use helper
         // if dont get any result -> means we dont have color option for this product.
         if (responseMessage != 0) {
           statusCode = 200;

@@ -109,8 +109,8 @@ module.exports.isItValidPorductQuantity = (productQuantity) => {
 };
 
 // valid color Name
-module.exports.isItValidColor = (color) => {
-  let isValid = /^[a-zA-Z]+$/.test(color);
+module.exports.isItValidColor = (colorName) => {
+  let isValid = /^[a-zA-Z]+$/.test(colorName);
   if (isValid) return true;
   return false;
 };
