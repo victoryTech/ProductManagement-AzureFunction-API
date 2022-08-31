@@ -1,4 +1,4 @@
-const productControllers = require("../Controllers/productControllers.js");
+const services = require("../Services/productServices.js");
 const validation = require("../Validation/inputValidation.js");
 
 module.exports = async function (context, req) {
@@ -11,7 +11,7 @@ module.exports = async function (context, req) {
     let validId = await validation.hasValidId(req.params.id);
 
     if (validId) {
-      responseMessage = await productControllers.getProductById(req.params.id);
+      responseMessage = await services.getProductById(req.params.id);
     } else {
       responseMessage = "Invalid Product Id, Enter Valid Product Id.";
       statusCode = 400;

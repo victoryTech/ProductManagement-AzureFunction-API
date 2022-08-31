@@ -1,4 +1,4 @@
-const productControllers = require("../Controllers/productControllers.js");
+const services = require("../Services/productServices.js");
 const validation = require("../Validation/inputValidation.js");
 
 module.exports = async function (context, req) {
@@ -19,8 +19,11 @@ module.exports = async function (context, req) {
     ) {
       // extracting pure data
       let extractData = validation.extractProductNameAndColor(req.params);
-      let productDetails =
-        await productControllers.getProductInfoByNameAndColor(extractData);
+
+      let productDetails = await services.getProductInfoByNameAndColor(
+        extractData
+      );
+
       // check quantity is available or not
       for (let i = 0; i < productDetails.length; i++) {
         if (
@@ -32,9 +35,7 @@ module.exports = async function (context, req) {
           if (
             productDetails[i].productQuantity >= extractData.productQuantity
           ) {
-            await productControllers.updateProductQuantityOnProductSold(
-              extractData
-            );
+            await services.updateProductQuantityOnProductSold(extractData);
             responseMessage = `${extractData.productQuantity} Quantity of ${extractData.productColor} color ${extractData.productName} is sold.`;
             break;
           } else {

@@ -1,4 +1,4 @@
-const productControllers = require("../Controllers/productControllers.js");
+const services = require("../Services/productServices.js");
 const validation = require("../Validation/inputValidation.js");
 
 module.exports = async function (context, req) {
@@ -15,7 +15,7 @@ module.exports = async function (context, req) {
       // Given product is available or not
       if (isProductAvailable) {
         let extractData = validation.extractData(req.params);
-        responseMessage = await productControllers.getProductColorsByName(
+        responseMessage = await services.getProductColorsByName(
           extractData.productName
         );
         // use helper

@@ -1,4 +1,4 @@
-const productControllers = require("../Controllers/productControllers.js");
+const services = require("../Services/productServices.js");
 const validation = require("../Validation/inputValidation.js");
 
 module.exports = async function (context, req) {
@@ -8,20 +8,23 @@ module.exports = async function (context, req) {
   if (req.params.id) {
     // checking product Id constraint
     let isValid = validation.isItValidPorductId(req.params.id);
+
     if (isValid) {
       // check product is present or not with this product id
       let idIsAvailable = await validation.hasValidId(req.params.id);
+
       if (idIsAvailable) {
         if (req.body) {
           // Checking all the details of the update product is valid or not.
-          if (await validation.checkAllFieldsOfUpdateProductData(req.body)) {
+          if (validation.checkAllFieldsOfUpdateProductData(req.body)) {
             // Extracting pure data
-            let extractUpdateData = await validation.extractData(req.body);
+            let extractUpdateData = validation.extractData(req.body);
 
-            await productControllers.updateProductDetailsById(
+            await services.updateProductDetailsById(
               extractUpdateData,
               req.params.id
             );
+
             responseMessage = `Product details of ID ${req.params.id} is changed!!`;
             statusCode = 200;
           } else {

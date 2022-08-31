@@ -1,4 +1,4 @@
-const productControllers = require("../Controllers/productControllers.js");
+const services = require("../Services/productServices.js");
 const validation = require("../Validation/inputValidation.js");
 
 module.exports = async function (context, req) {
@@ -10,7 +10,7 @@ module.exports = async function (context, req) {
     let validateDeleteId = await validation.hasValidId(req.params.id);
 
     if (validateDeleteId) {
-      productControllers.deleteProductById(req.params.id);
+      await services.deleteProductById(req.params.id);
       responseMessage = `Product Id : ${req.params.id} is deleted!!!`;
       statusCode = 200;
     } else {

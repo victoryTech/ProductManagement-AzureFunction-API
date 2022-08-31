@@ -1,4 +1,4 @@
-const productControllers = require("../Controllers/productControllers.js");
+const services = require("../Services/productServices.js");
 const validation = require("../Validation/inputValidation.js");
 
 module.exports = async function (context, req) {
@@ -11,12 +11,14 @@ module.exports = async function (context, req) {
     let isValidDetails = validation.checkAllFieldsOfInsertProductColorData(
       req.body
     );
+
     if (isValidDetails) {
       // Extracting pure details
       let extractPureData = validation.extractInputProductWithColorData(
         req.body
       );
-      await productControllers.insertProductWithColorData(extractPureData);
+
+      await services.insertProductWithColorData(extractPureData);
       responseMessage = `Details Inserted into Database!!!`;
       statusCode = 200;
     } else {

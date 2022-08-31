@@ -1,11 +1,10 @@
-const productControllers = require("../Controllers/productControllers.js");
+const services = require("../Services/productServices.js");
 
 // validating productId is present or not
 module.exports.hasValidId = async (id) => {
-  let allAvailableProducts =
-    await productControllers.getAllAvailableProductDetails();
+  const allAvailableProducts = await services.getAllAvailableProductDetails();
 
-  let isIdPresent = allAvailableProducts.reduce(function (acc, curr) {
+  const isIdPresent = allAvailableProducts.reduce(function (acc, curr) {
     if (curr.productId == id) {
       acc = true;
     }
@@ -17,32 +16,35 @@ module.exports.hasValidId = async (id) => {
 
 // validating productName is present or not
 module.exports.hasValidProductName = async (productName) => {
-  let allAvailableProducts =
-    await productControllers.getAllAvailableProductDetails();
+  const allAvailableProducts = await services.getAllAvailableProductDetails();
 
   productName = this.trimSpace(productName);
 
-  let isProductNamePresent = allAvailableProducts.reduce(function (acc, curr) {
+  const isProductNamePresent = allAvailableProducts.reduce(function (
+    acc,
+    curr
+  ) {
     if (curr.productName.toLowerCase() == productName.toLowerCase()) {
       acc = true;
     }
     return acc;
-  }, false);
+  },
+  false);
 
   return isProductNamePresent;
 };
 
 // validate all fields of Inserted data
 module.exports.checkAllFieldsOfInsertProductData = async (insertedData) => {
-  let insertedProductName = this.trimSpace(insertedData.productName);
-  let insertedProductId = insertedData.productId;
-  let insertedProductPrice = insertedData.productPrice;
-  let insertedProductQuantity = insertedData.productQuantity;
-  let insertedProductNameIsPresent = await this.hasValidProductName(
+  const insertedProductName = this.trimSpace(insertedData.productName);
+  const insertedProductId = insertedData.productId;
+  const insertedProductPrice = insertedData.productPrice;
+  const insertedProductQuantity = insertedData.productQuantity;
+  const insertedProductNameIsPresent = await this.hasValidProductName(
     insertedProductName
   );
 
-  let insertedProductIdIsPresent = await this.hasValidId(insertedProductId);
+  const insertedProductIdIsPresent = await this.hasValidId(insertedProductId);
 
   if (
     this.isItValidPorductName(insertedProductName) &&
@@ -58,10 +60,10 @@ module.exports.checkAllFieldsOfInsertProductData = async (insertedData) => {
 };
 
 // validate all fields of updated data
-module.exports.checkAllFieldsOfUpdateProductData = async (updateData) => {
-  let updatedProductName = this.trimSpace(updateData.productName);
-  let updatedProductPrice = updateData.productPrice;
-  let updatedProductQuantity = updateData.productQuantity;
+module.exports.checkAllFieldsOfUpdateProductData = (updateData) => {
+  const updatedProductName = this.trimSpace(updateData.productName);
+  const updatedProductPrice = updateData.productPrice;
+  const updatedProductQuantity = updateData.productQuantity;
 
   if (
     this.isItValidPorductName(updatedProductName) &&
@@ -81,21 +83,21 @@ module.exports.extractData = (insertedData) => {
 
 // Is it valid productName acc. to schema
 module.exports.isItValidPorductName = (data) => {
-  let isValid = /^[a-zA-Z]+$/.test(data);
+  const isValid = /^[a-zA-Z]+$/.test(data);
   if (isValid) return true;
   return false;
 };
 
 // Is it valid productId acc. to schema
 module.exports.isItValidPorductId = (id) => {
-  let isValid = /^\d+$/.test(id);
+  const isValid = /^\d+$/.test(id);
   if (isValid && id > 0) return true;
   return false;
 };
 
 // Is it valid productPrice acc. to schema
 module.exports.isItValidPorductPrice = (productPrice) => {
-  let isValid = /^\d+$/.test(productPrice);
+  const isValid = /^\d+$/.test(productPrice);
   if (isValid) return true;
   return false;
 };
@@ -103,21 +105,21 @@ module.exports.isItValidPorductPrice = (productPrice) => {
 // Is it valid productQuantity acc. to schema
 module.exports.isItValidPorductQuantity = (productQuantity) => {
   productQuantity = parseInt(productQuantity);
-  let isValid = /^\d+$/.test(productQuantity);
+  const isValid = /^\d+$/.test(productQuantity);
   if (isValid) return true;
   return false;
 };
 
 // valid color Name
 module.exports.isItValidColor = (colorName) => {
-  let isValid = /^[a-zA-Z]+$/.test(colorName);
+  const isValid = /^[a-zA-Z]+$/.test(colorName);
   if (isValid) return true;
   return false;
 };
 
 // valid color id
 module.exports.isItValidColorId = (colorId) => {
-  let isValid = /^\d+$/.test(colorId);
+  const isValid = /^\d+$/.test(colorId);
   if (isValid) return true;
   return false;
 };
@@ -148,12 +150,12 @@ module.exports.extractProductNameAndColor = (insertedProductDetails) => {
 
 // Checking all the details of the product Information is valid or not.
 module.exports.checkAllFieldsOfInsertProductColorData = (insertedInputData) => {
-  let insertedProductName = this.trimSpace(insertedInputData.productName);
-  let insertedProductId = insertedInputData.productId;
-  let insertedColorId = insertedInputData.colorId;
-  let insertedColorName = insertedInputData.colorName;
-  let insertedProductPrice = insertedInputData.productPrice;
-  let insertedProductQuantity = insertedInputData.productQuantity;
+  const insertedProductName = this.trimSpace(insertedInputData.productName);
+  const insertedProductId = insertedInputData.productId;
+  const insertedColorId = insertedInputData.colorId;
+  const insertedColorName = insertedInputData.colorName;
+  const insertedProductPrice = insertedInputData.productPrice;
+  const insertedProductQuantity = insertedInputData.productQuantity;
 
   if (
     this.isItValidPorductName(insertedProductName) &&

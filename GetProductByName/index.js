@@ -1,4 +1,4 @@
-const productControllers = require("../Controllers/productControllers.js");
+const services = require("../Services/productServices.js");
 const validation = require("../Validation/inputValidation.js");
 
 module.exports = async function (context, req) {
@@ -7,7 +7,7 @@ module.exports = async function (context, req) {
   let responseMessage, statusCode;
   if (req.params.productName) {
     // product name constraint is valid or not
-    let isValid = validation.hasValidProductName(req.params.productName);
+    let isValid = validation.isItValidPorductName(req.params.productName);
     // Checking whether product is available or not
     if (isValid) {
       let isProductAvailable = await validation.hasValidProductName(
@@ -15,7 +15,7 @@ module.exports = async function (context, req) {
       );
       if (isProductAvailable) {
         let extractProductName = validation.extractData(req.params);
-        responseMessage = await productControllers.getProductByName(
+        responseMessage = await services.getProductByName(
           extractProductName.productName
         );
         statusCode = 200;
