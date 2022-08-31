@@ -1,147 +1,136 @@
 const { poolPromise } = require("./dbConnection.js");
 
+module.exports.commonOperation = async (parameter, storeProcedure) => {
+  try {
+    const pool = await poolPromise;
+    const request = await pool.request();
+
+    if (parameter.length != 0) {
+      if (Array.isArray(parameter)) {
+        parameter.forEach((param) => {
+          request.input(param.name, param.type, param.value);
+        });
+      }
+    }
+
+    const result = await request.execute(storeProcedure);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllAvailableProductsFromDB: async () => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-    let result = await request.execute("spGetAllAvailableProducts");
-    return result;
+    try {
+      return await this.commonOperation([], "spGetAllAvailableProducts");
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   getAllAvailableProductDetailsFromDB: async () => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-    let result = await request.execute("spGetAllAvailableProductsDetails");
-    return result;
+    try {
+      return await this.commonOperation([], "spGetAllAvailableProductsDetails");
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   getProductByIdFromDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      const result = await this.commonOperation(parameter, "spGetProductById");
+      return result;
+    } catch (err) {
+      console.log(err);
     }
-
-    let result = await request.execute("spGetProductById");
-    return result;
   },
 
   getProductByNameFromDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      const result = await this.commonOperation(
+        parameter,
+        "spGetProductByProductName"
+      );
+      return result;
+    } catch (err) {
+      console.log(err);
     }
-
-    let result = await request.execute("spGetProductByProductName");
-    return result;
   },
 
   insertProductInDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      await this.commonOperation(parameter, "spInsertProduct");
+    } catch (err) {
+      console.log(err);
     }
-
-    await request.execute("spInsertProduct");
   },
 
   updateProductDetailsByIdInDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      await this.commonOperation(parameter, "spUpdateProductById");
+    } catch (err) {
+      console.log(err);
     }
-    await request.execute("spUpdateProductById");
   },
 
   updateProductQuantityByIdInDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      await this.commonOperation(parameter, "spUpdateProductQuantityById");
+    } catch (err) {
+      console.log(err);
     }
-    await request.execute("spUpdateProductQuantityById");
   },
 
   deleteProductByIdInDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      await this.commonOperation(parameter, "spDeleteProductById");
+    } catch (err) {
+      console.log();
     }
-
-    await request.execute("spDeleteProductById");
   },
 
   getProductInfoByNameAndColorFromDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      const result = await this.commonOperation(
+        parameter,
+        "spGetProductInfoByProductNameAndProductColor"
+      );
+      return result;
+    } catch (err) {
+      console.log(err);
     }
-
-    let result = await request.execute(
-      "spGetProductInfoByProductNameAndProductColor"
-    );
-    return result;
   },
 
   getProductColorsByNameFromDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      const result = await this.commonOperation(
+        parameter,
+        "spGetAvailableColorOptionsOfProduct"
+      );
+      return result;
+    } catch (err) {
+      console.log(err);
     }
-
-    let result = await request.execute("spGetAvailableColorOptionsOfProduct");
-    return result;
   },
 
   insertProductWithColorDataInDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      await this.commonOperation(parameter, "spInsertProductDetails");
+    } catch (err) {
+      console.log(err);
     }
-
-    await request.execute("spInsertProductDetails");
   },
 
   updateProductQuantityOnProductSoldInDB: async (parameter) => {
-    let pool = await poolPromise;
-    let request = await pool.request();
-    if (Array.isArray(parameter)) {
-      parameter.forEach((param) => {
-        request.input(param.name, param.type, param.value);
-      });
+    try {
+      const result = await this.commonOperation(
+        parameter,
+        "spUpdateProductQuantityOnProductSold"
+      );
+      return result;
+    } catch (err) {
+      console.log(err);
     }
-    return await request.execute("spUpdateProductQuantityOnProductSold");
   },
 };
