@@ -6,11 +6,9 @@ module.exports.commonOperation = async (parameter, storeProcedure) => {
     const request = await pool.request();
 
     if (parameter.length != 0) {
-      if (Array.isArray(parameter)) {
-        parameter.forEach((param) => {
-          request.input(param.name, param.type, param.value);
-        });
-      }
+      parameter.forEach((param) => {
+        request.input(param.name, param.type, param.value);
+      });
     }
 
     const result = await request.execute(storeProcedure);
@@ -23,7 +21,11 @@ module.exports.commonOperation = async (parameter, storeProcedure) => {
 module.exports = {
   getAllAvailableProductsFromDB: async () => {
     try {
-      return await this.commonOperation([], "spGetAllAvailableProducts");
+      let sqlParameters = [];
+      return await this.commonOperation(
+        sqlParameters,
+        "spGetAllAvailableProducts"
+      );
     } catch (err) {
       console.log(err);
     }
@@ -31,7 +33,11 @@ module.exports = {
 
   getAllAvailableProductDetailsFromDB: async () => {
     try {
-      return await this.commonOperation([], "spGetAllAvailableProductsDetails");
+      let sqlParameters = [];
+      return await this.commonOperation(
+        sqlParameters,
+        "spGetAllAvailableProductsDetails"
+      );
     } catch (err) {
       console.log(err);
     }

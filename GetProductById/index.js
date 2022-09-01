@@ -1,28 +1,16 @@
-const services = require("../Services/productServices.js");
-const validation = require("../Validation/inputValidation.js");
+const functionHandler = require("../Utils/functionHandller.js");
 
 module.exports = async function (context, req) {
-  context.log("Get product details with the given productId!!!");
+  try {
+    context.log("Get product details with the given productId!!!");
 
-  let responseMessage;
-  let statusCode;
-  if (req.params.id) {
-    // Checking whether product id is valid or not, if not present send a message as invalid Id
-    let validId = await validation.hasValidId(req.params.id);
+    const resultObj = await functionHandler.getProductById(req.params.id);
 
-    if (validId) {
-      responseMessage = await services.getProductById(req.params.id);
-    } else {
-      responseMessage = "Invalid Product Id, Enter Valid Product Id.";
-      statusCode = 400;
-    }
-  } else {
-    responseMessage = "Please, Enter the Product Id!!!";
-    statusCode = 204;
+    context.res = {
+      status: resultObj.statusCode,
+      body: resultObj.responseMessage,
+    };
+  } catch (err) {
+    console.log(err);
   }
-
-  context.res = {
-    status: statusCode,
-    body: responseMessage,
-  };
 };
