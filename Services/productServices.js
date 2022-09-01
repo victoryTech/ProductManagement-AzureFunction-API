@@ -1,9 +1,16 @@
 const { sql } = require("../DataAcess/dbConnection.js");
 const productDataAcess = require("../DataAcess/productsDataAcess.js");
+const constants = require("../Utils/constants.js");
 
 module.exports.getAllAvaiableProducts = async () => {
   try {
-    const result = await productDataAcess.getAllAvailableProductsFromDB();
+    const sqlParameters = [];
+
+    const result = await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.GetAllAvailableProducts
+    );
+
     return result.recordsets[0];
   } catch (err) {
     console.log(err);
@@ -12,7 +19,13 @@ module.exports.getAllAvaiableProducts = async () => {
 
 module.exports.getAllAvailableProductDetails = async () => {
   try {
-    const result = await productDataAcess.getAllAvailableProductDetailsFromDB();
+    const sqlParameters = [];
+
+    const result = await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.GetAllAvailableProductsDetails
+    );
+
     return result.recordsets[0];
   } catch (err) {
     console.log(err);
@@ -27,7 +40,12 @@ module.exports.getProductById = async (id) => {
       type: sql.Int,
       value: id,
     });
-    const result = await productDataAcess.getProductByIdFromDB(sqlParameters);
+
+    const result = await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.GetProductById
+    );
+
     return result.recordset;
   } catch (err) {
     console.log(err);
@@ -42,7 +60,12 @@ module.exports.getProductByName = async (searchProductName) => {
       type: sql.NVarChar,
       value: searchProductName,
     });
-    const result = await productDataAcess.getProductByNameFromDB(sqlParameters);
+
+    const result = await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.GetProductDetailsByName
+    );
+
     return result.recordset;
   } catch (err) {
     console.log(err);
@@ -73,7 +96,10 @@ module.exports.insertProduct = async (parameter) => {
       value: parameter.productQuantity,
     });
 
-    await productDataAcess.insertProductInDB(sqlParameters);
+    await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.InsertProductDetails
+    );
   } catch (err) {
     console.log(err);
   }
@@ -102,7 +128,11 @@ module.exports.updateProductDetailsById = async (parameter, productId) => {
       type: sql.Int,
       value: parameter.productQuantity,
     });
-    await productDataAcess.updateProductDetailsByIdInDB(sqlParameters);
+
+    await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.UpdateProductDetailsById
+    );
   } catch (err) {
     console.log(err);
   }
@@ -124,7 +154,11 @@ module.exports.updateProductQuantityById = async (
       type: sql.Int,
       value: productQuantity,
     });
-    await productDataAcess.updateProductQuantityByIdInDB(sqlParameters);
+
+    await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.UpdateProductQuantityById
+    );
   } catch (err) {
     console.log(err);
   }
@@ -138,7 +172,11 @@ module.exports.deleteProductById = async (id) => {
       type: sql.Int,
       value: id,
     });
-    await productDataAcess.deleteProductByIdInDB(sqlParameters);
+
+    await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.DeleteProductById
+    );
   } catch (err) {
     console.log(err);
   }
@@ -158,9 +196,11 @@ module.exports.getProductInfoByNameAndColor = async (parameter) => {
       value: parameter.productColor,
     });
 
-    const result = await productDataAcess.getProductInfoByNameAndColorFromDB(
-      sqlParameters
+    const result = await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.GetProductDetailsByNameAndColor
     );
+
     return result.recordset;
   } catch (err) {
     console.log(err);
@@ -176,9 +216,11 @@ module.exports.getProductColorsByName = async (productName) => {
       value: productName,
     });
 
-    const result = await productDataAcess.getProductColorsByNameFromDB(
-      sqlParameters
+    const result = await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.GetColorOptionsByName
     );
+
     return result.recordsets[0];
   } catch (err) {
     console.log(err);
@@ -219,7 +261,10 @@ module.exports.insertProductWithColorData = async (parameter) => {
       value: parameter.productQuantity,
     });
 
-    await productDataAcess.insertProductWithColorDataInDB(sqlParameters);
+    await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.InsertProductDetailsWithColor
+    );
   } catch (err) {
     console.log(err);
   }
@@ -243,8 +288,10 @@ module.exports.updateProductQuantityOnProductSold = async (parameter) => {
       type: sql.INT,
       value: parameter.productQuantity,
     });
-    await productDataAcess.updateProductQuantityOnProductSoldInDB(
-      sqlParameters
+
+    await productDataAcess.commonOperation(
+      sqlParameters,
+      constants.STOREPROCEDURE.UpdateProductQuantityOnProductSell
     );
   } catch (err) {
     console.log(err);

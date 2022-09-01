@@ -101,3 +101,8 @@ __azurite_db*__.json
 # .env file
 #config
 /.env
+
+# self test file
+Utils/index.js
+Utils/helper.js
+Utils/logger.js
