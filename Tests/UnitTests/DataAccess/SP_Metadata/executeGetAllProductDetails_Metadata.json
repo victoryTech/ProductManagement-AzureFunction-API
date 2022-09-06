@@ -1,0 +1,34 @@
+{
+  "recordset": [
+    {
+      "productId": 1,
+      "productName": "Laptop",
+      "productPrice": 25000,
+      "productQuantity": 52
+    },
+    {
+      "productId": 2,
+      "productName": "Mobile",
+      "productPrice": 10000,
+      "productQuantity": 45
+    },
+    {
+      "productId": 3,
+      "productName": "Desktop",
+      "productPrice": 12000,
+      "productQuantity": 10
+    },
+    {
+      "productId": 4,
+      "productName": "CPU",
+      "productPrice": 10000,
+      "productQuantity": 20
+    },
+    {
+      "productId": 6,
+      "productName": "Demo",
+      "productPrice": 1,
+      "productQuantity": 100
+    }
+  ]
+}

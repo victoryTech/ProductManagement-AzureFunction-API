@@ -1,10 +1,10 @@
 const sql = require("mssql");
 const config = require("../Config/databaseConfig.js");
 
-const poolPromise = new sql.ConnectionPool(config)
+let poolPromise = new sql.ConnectionPool(config)
   .connect()
   .then((pool) => {
-    console.log("Connected to MSSQL Databse.");
+    // console.log("Connected to MSSQL Databse.");
     return pool;
   })
   .catch((err) =>
@@ -12,6 +12,6 @@ const poolPromise = new sql.ConnectionPool(config)
   );
 
 module.exports = {
-  sql,
-  poolPromise,
+  sql: sql,
+  poolPromise: poolPromise,
 };

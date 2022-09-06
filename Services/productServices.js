@@ -26,7 +26,7 @@ module.exports.getAllAvailableProductDetails = async () => {
       constants.STOREPROCEDURE.GetAllAvailableProductsDetails
     );
 
-    return result.recordsets[0];
+    return result.recordset;
   } catch (err) {
     console.log(err);
   }

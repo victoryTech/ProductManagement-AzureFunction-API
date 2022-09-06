@@ -83,7 +83,7 @@ module.exports.getAllProducts = async () => {
 module.exports.getDetailsOfAllProducts = async () => {
   try {
     const responseMessage = await services.getAllAvailableProductDetails();
-    let statusCode;
+    let statusCode = 200;
 
     if (responseMessage.length == 0) {
       responseMessage = "We dont have any product at this moment!!";

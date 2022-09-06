@@ -5,6 +5,12 @@ module.exports.STATUSCODE = {
   NoData: 403,
 };
 
+module.exports.RESPONSE_MESSAGES = {
+  DataInsert: "Data Inserted Successfully",
+  DataUpdate: "Data Updated Successfully",
+  DataUpsert: "Operation Completed Successfully",
+};
+
 module.exports.STOREPROCEDURE = {
   GetAllAvailableProducts: "spGetAllAvailableProducts",
   GetAllAvailableProductsDetails: "spGetAllAvailableProductsDetails",
