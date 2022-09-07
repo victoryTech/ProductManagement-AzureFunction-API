@@ -2,12 +2,16 @@ const {
   productDataAcess,
   poolPromise,
 } = require("../../__mocks__/commonOperations.js");
+
 const sql = require("../../../DataAcess/dbConnection.js");
+
 const constants = require("../../../Utils/constants.js");
+
 const executeProductByIdOutput = require("./Output_Response/executeProductByIdOutput.json");
 const executeInsertProductDetailsOutput = require("./Output_Response/executeInsertProductDetailsOutput.json");
 const executePartiallyUpdateQuantityByIdOutput = require("./Output_Response/executePartiallyUpdateQuantityOutput.json");
 const executeGetAllProductsDetailsOutput = require("./Output_Response/executeGetAllProductDetailsOutput.json");
+const executeDeleteProductDetailsByIdOutput = require("./Output_Response/executeDeleteProductDetailsByIdOutput.json");
 
 test("Test Get Product By Id", async () => {
   const sqlParameters = [];
@@ -22,7 +26,6 @@ test("Test Get Product By Id", async () => {
     sqlParameters,
     constants.STOREPROCEDURE.GetProductById
   );
-
   expect(result).toEqual(executeProductByIdOutput);
 });
 
@@ -87,4 +90,20 @@ test("Test Get All Available Porduct details", async () => {
   );
 
   expect(result).toEqual(executeGetAllProductsDetailsOutput);
+});
+
+test("Test delete product details by id", async () => {
+  const sqlParameters = [];
+  sqlParameters.push({
+    name: "productId",
+    type: sql.Int,
+    value: 6,
+  });
+
+  const result = await productDataAcess.commonOperation(
+    sqlParameters,
+    constants.STOREPROCEDURE.DeleteProductById
+  );
+
+  expect(result).toEqual(executeDeleteProductDetailsByIdOutput);
 });

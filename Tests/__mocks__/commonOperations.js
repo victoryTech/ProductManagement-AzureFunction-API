@@ -6,6 +6,7 @@ const executeInsertProductDetails_Metadata = require("../UnitTests/DataAccess/SP
 const executeProductById_Metadata = require("../UnitTests/DataAccess/SP_Metadata/executeGetProductById_Metadata.json");
 const executePartiallyUpdateProductQuantity_Metadata = require("../UnitTests/DataAccess/SP_Metadata/executePartiallyUpdateQuantity_Metadata.json");
 const executeGetAllProductDetails_Metadata = require("../UnitTests/DataAccess/SP_Metadata/executeGetAllProductDetails_Metadata.json");
+const executeDeleteProductDetailsById_Metadata = require("../UnitTests/DataAccess/SP_Metadata/executeDeleteProductDetailsById_Metadata.json");
 
 const mockConnection = {
   connect: jest.fn().mockResolvedValue(),
@@ -23,6 +24,8 @@ productDataAcess.commonOperation = jest.fn((parameter, storedProcedure) => {
       return executePartiallyUpdateProductQuantity_Metadata;
     case constants.STOREPROCEDURE.GetAllAvailableProductsDetails:
       return executeGetAllProductDetails_Metadata;
+    case constants.STOREPROCEDURE.DeleteProductById:
+      return executeDeleteProductDetailsById_Metadata;
   }
 });
 
