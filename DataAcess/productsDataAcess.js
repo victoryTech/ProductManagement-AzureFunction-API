@@ -21,7 +21,7 @@ const { poolPromise } = require("./dbConnection.js");
 
 async function commonOperation(parameter, storeProcedure) {
   try {
-    const pool = await poolPromise;
+    const pool = await poolPromise();
     const request = await pool.request();
 
     if (parameter.length != 0) {
